@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 170" role="img" aria-label="A little capybara resting">
+  <ellipse cx="82" cy="157" rx="55" ry="8" fill="#06101d" opacity=".42"/>
+  <path d="M25 111c0-25 19-42 46-43h37c24 0 37 17 39 40l-2 22H29z" fill="#a96f45" stroke="#71482f" stroke-width="3"/>
+  <path d="M91 88c-1-23 9-42 29-45 17-3 30 8 33 24l3 22 4 9c2 6-3 11-10 11h-30c-17 0-27-8-29-21z" fill="#bb8053" stroke="#71482f" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M108 49c-2-8 2-13 8-13 7 0 10 5 10 13" fill="#a96f45" stroke="#71482f" stroke-width="3"/>
+  <path d="M31 103c-9 2-13 9-10 16m118-25c8 2 12 6 13 12" fill="none" stroke="#d39a69" stroke-width="5" stroke-linecap="round" opacity=".72"/>
+  <path d="M123 69q5 5 10 0" fill="none" stroke="#39271f" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="154" cy="91" rx="4.5" ry="3.4" fill="#39271f"/>
+  <path d="M146 99q-7 4-13 0m17 3 8 2m-9-6 9-2" fill="none" stroke="#71482f" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M45 128v20q0 5 7 5t7-5v-19m40 0v19q0 5 7 5t7-5v-20" fill="#8b5839" stroke="#71482f" stroke-width="2.5"/>
+  <path d="M29 103q-8 8-9 17" fill="none" stroke="#8b5839" stroke-width="4" stroke-linecap="round"/><path d="M55 82q14-8 31-4" fill="none" stroke="#d39a69" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+</svg>

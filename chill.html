@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#010818">
+  <meta name="description" content="A quiet sky and a tiny desktop companion."><title>STILL ALIVE. — Chill</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .chill-toolbar-actions{display:flex;align-items:center;gap:10px}
+    .deadline-topbar{display:flex;align-items:center;gap:0;border:1px solid rgba(213,213,213,.2);border-radius:8px;background:linear-gradient(140deg,rgba(4,18,46,.78),rgba(2,10,26,.84));font:10px 'DM Mono',monospace;font-variant-numeric:tabular-nums;backdrop-filter:blur(8px)}
+    .deadline-topbar .countdown-unit{display:flex;align-items:baseline;gap:3px;padding:7px 8px;border-right:1px solid rgba(213,213,213,.1);white-space:nowrap}
+    .deadline-topbar .countdown-unit:last-child{border:0}
+    .deadline-topbar strong{color:#d5d5d5;font-size:11px;font-weight:500}.deadline-topbar span{color:#afb9c7;font-size:7px;text-transform:uppercase}
+    @media(max-width:760px){.chill-toolbar-actions{gap:6px}.deadline-topbar .countdown-unit{gap:2px;padding:5px 4px}.deadline-topbar strong{font-size:9px}.deadline-topbar span{font-size:6px}}
+  </style>
+</head>
+<body class="chill-body">
+  <div class="sky" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <header class="chill-toolbar"><a class="wordmark chill-return" href="index.html" data-home-nav aria-label="Return to the hideout" title="Return to the hideout">←</a><div class="chill-toolbar-actions"><div class="deadline-topbar deadline-countdown" aria-label="Time remaining to deadline"><div class="countdown-unit"><strong data-countdown="weeks">--</strong><span>wk</span></div><div class="countdown-unit"><strong data-countdown="days">--</strong><span>d</span></div><div class="countdown-unit"><strong data-countdown="hours">--</strong><span>hr</span></div><div class="countdown-unit"><strong data-countdown="minutes">--</strong><span>min</span></div><div class="countdown-unit"><strong data-countdown="seconds">--</strong><span>sec</span></div></div><button class="icon-button" id="settings-button" aria-label="Open settings" title="Settings">⚙</button></div></header>
+  <main class="companion-page">
+    <section id="void" class="companion-world" aria-label="Companion's quiet world">
+      <div class="chill-artwork" aria-label="A quiet night desk with a starry window and laptop">
+        <img class="chill-background" src="assets/images/chill_bg.jpg" alt="A warmly lit desk beside a large starry night window">
+        <div class="star-pane star-pane-right"><canvas id="window-stars-right" aria-label="Interactive stars in the right window pane"></canvas></div>
+      </div>
+      <div class="companion-bubble" id="companion-message" aria-live="polite">You can take it one small thing at a time.</div>
+      <div class="companion-ground"></div>
+      <button class="companion-creature" id="companion-creature" aria-label="Pet the capybara"><img id="companion-sprite" src="assets/images/companion/idle.svg" alt="A little capybara"><span class="companion-shadow"></span><span class="sleep-z" id="sleep-z" aria-hidden="true" hidden>z z</span></button>
+      <div class="world-caption"><span id="companion-state">WANDERING</span><span id="chill-time">00:00 together</span><span id="void-time">00:00 here</span></div>
+    </section>
+  </main>
+  <div id="shared-tools"></div>
+  <script src="js/quotes.js"></script><script src="js/storage.js"></script><script src="js/site.js"></script><script src="js/audio.js"></script><script src="js/void.js"></script><script src="js/achievements.js"></script><script src="js/companion.js"></script>
+</body>
+</html>
