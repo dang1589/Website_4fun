@@ -37,7 +37,7 @@
       const preferences = SAStorage.get().preferences;
       SAStorage.update({ preferences: { ...preferences, secretRushUnlocked: true } });
     }
-    secretUnlock.hidden = !(SAStorage.get().preferences.secretRushUnlocked || (distance >= 10000 && score >= 10000));
+    secretUnlock.hidden = !(SAStorage.get().preferences.secretRushUnlocked || (distance >= 4000 && score >= 20604));
   }
   function saveBest() { if (score > lastSavedBest) { lastSavedBest = Math.floor(score); SAStorage.update({ bossHighScore: lastSavedBest }); } }
   function start() {
