@@ -6,12 +6,6 @@
   const sprite = document.querySelector('#companion-sprite');
   const bubble = document.querySelector('#companion-message');
   const sleepZ = document.querySelector('#sleep-z');
-  const encouragement = [
-    'You can take it one small thing at a time.',
-    'A pause is part of making progress.',
-    'You made it here. That counts for a moment.',
-    'Water, a breath, and then maybe one tiny task.'
-  ];
   const saved = SAStorage.get().companion || {};
   const companion = { interactions: 0, snacks: 0, friendship: 0, togetherSeconds: 0, look: 'moss', unlockedLooks: ['moss'], ...saved };
   let direction = 1;
@@ -118,7 +112,6 @@
         wanderSessions++;
       }
 
-      // Near an edge, the capybara pauses for a short nap before choosing a new destination.
       const atBorder = targetX <= 7 || targetX >= 93 || targetY <= 8 || targetY >= 91;
       if (atBorder) {
         if (mode === 'running') { runSessions = 0; runLimit = randomInt(3, 7); }
@@ -162,7 +155,7 @@
     creature.dataset.motion = 'jumping';
     setSprite('jump');
     SAStorage.update({ companion });
-    say(['Hi. I was just passing by.', 'That was a nice hello.', 'I am glad we found this quiet place.'][randomInt(0, 2)]);
+    say(['Hi. resume your studies', 'Guten Taggg.', 'Dont click me!!!!.'][randomInt(0, 2)]);
     phaseTimer = window.setTimeout(() => {
       creature.dataset.motion = 'idle';
       setSprite('idle');
