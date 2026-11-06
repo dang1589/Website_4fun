@@ -8,8 +8,9 @@
   const jumpSprite = new Image(); jumpSprite.src = 'assets/images/companion/jump.svg';
   const runSprite = new Image(); runSprite.src = 'assets/images/companion/walk-2.svg';
   const bossNames = ['Lab Report','Group Project','Midterm Exam','Final Exam','Thesis: Final Form'];
+  const gravity = 1750, jumpVelocity = 650, jumpFlightSeconds = (2 * jumpVelocity) / gravity;
   let width = 0, height = 0, dpr = 1, raf = 0, previous = 0, walkClock = 0, frame = 0;
-  let mode = 'ready', worldTime = 0, distance = 0, score = 0, energy = 100, wave = 1, speed = 250, nextSpawn = 1.25, nextBossAt = 115, lastSavedBest = Number(SAStorage.get().bossHighScore) || 0, productivity = Number(SAStorage.get().productivity) || 0, coffees = Number(SAStorage.get().lifetimeCoffees) || 0;
+  let mode = 'ready', worldTime = 0, distance = 0, score = 0, energy = 100, wave = 1, speed = 250, nextSpawnDistance = 20, nextBossAt = 115, hazardsSinceCoffee = 0, lastObstacleType = '', jumpBuffer = 0, lastSavedBest = Number(SAStorage.get().bossHighScore) || 0, productivity = Number(SAStorage.get().productivity) || 0, coffees = Number(SAStorage.get().lifetimeCoffees) || 0;
   const player = { x: 95, y: 0, w: 40, h: 52, vy: 0, grounded: true };
   let obstacles = [];
   const ground = () => height - 52;
@@ -32,7 +33,7 @@
     document.querySelector('#rush-best').textContent = Math.max(lastSavedBest,Math.floor(score));
     document.querySelector('#rush-energy-bar').style.width = `${Math.max(0,energy)}%`;
     document.querySelector('#rush-energy-text').textContent = `${Math.max(0,Math.ceil(energy))}%`;
-    if (distance >= 10000 && score >= 10000 && !SAStorage.get().preferences.secretRushUnlocked) {
+    if (distance >= 4000 && score >= 20604 && !SAStorage.get().preferences.secretRushUnlocked) {
       const preferences = SAStorage.get().preferences;
       SAStorage.update({ preferences: { ...preferences, secretRushUnlocked: true } });
     }
@@ -40,13 +41,14 @@
   }
   function saveBest() { if (score > lastSavedBest) { lastSavedBest = Math.floor(score); SAStorage.update({ bossHighScore: lastSavedBest }); } }
   function start() {
-    if (mode === 'over') { worldTime = 0; distance = 0; score = 0; energy = 100; wave = 1; speed = 250; nextBossAt = 115; nextSpawn = 1; obstacles = []; player.vy = 0; player.grounded = true; player.y = ground() - player.h; }
+    if (mode === 'over') { worldTime = 0; distance = 0; score = 0; energy = 100; wave = 1; speed = 250; nextBossAt = 115; nextSpawnDistance = 20; hazardsSinceCoffee = 0; lastObstacleType = ''; jumpBuffer = 0; obstacles = []; player.vy = 0; player.grounded = true; player.y = ground() - player.h; }
     mode = 'run'; overlay.hidden = true; previous = performance.now(); scheduleFrame(); updateHud();
   }
   function scheduleFrame() { if (!raf && mode === 'run' && !document.hidden && document.body.dataset.frameHidden !== 'true') raf = requestAnimationFrame(tick); }
   function jump() {
     if (mode !== 'run') { start(); return; }
-    if (player.grounded) { player.vy = -650; player.grounded = false; }
+    if (player.grounded) { player.vy = -jumpVelocity; player.grounded = false; jumpBuffer = 0; }
+    else jumpBuffer = .12;
   }
   function spawnObstacle() {
     const types = [
@@ -54,7 +56,9 @@
       { type:'email', label:'LECTURER EMAIL', w:43, h:56, color:'#9f687a' },
       { type:'group', label:'GROUP PROJECT', w:53, h:43, color:'#345d94' }
     ];
-    const item = types[Math.floor(Math.random()*types.length)];
+    const choices = types.filter(item => item.type !== lastObstacleType);
+    const item = choices[Math.floor(Math.random()*choices.length)];
+    lastObstacleType = item.type;
     obstacles.push({ ...item, x:width+30, y:ground()-item.h, hit:false });
   }
   function spawnBoss() {
@@ -62,7 +66,22 @@
     obstacles.push({ type:'boss', label:bossNames[idx], w:76, h:79, color:'#a36f7d', x:width+40, y:ground()-79, hp:1, hit:false });
     nextBossAt = distance + 190;
   }
-  function addCoffee() { obstacles.push({ type:'coffee', label:'COFFEE', w:25, h:29, color:'#dfb875', x:width+30, y:ground()-105-Math.random()*55, hit:false }); }
+  function addCoffee() { obstacles.push({ type:'coffee', label:'COFFEE', w:25, h:29, color:'#dfb875', x:width+30, y:ground()-95-Math.random()*38, hit:false }); }
+  function scheduleNextPattern() {
+    const rewardBeat = hazardsSinceCoffee >= 4 || Math.random() < .18;
+    let gapPixels;
+    if (rewardBeat) {
+      addCoffee();
+      hazardsSinceCoffee = 0;
+      gapPixels = speed * (jumpFlightSeconds + .45 + Math.random() * .18) + 35;
+    } else {
+      spawnObstacle();
+      hazardsSinceCoffee++;
+      const landingBuffer = .06 + Math.random() * .06;
+      gapPixels = speed * (jumpFlightSeconds + landingBuffer) + 13;
+    }
+    nextSpawnDistance = distance + gapPixels / 14;
+  }
   function intersect(a,b) { return a.x < b.x+b.w && a.x+a.w > b.x && a.y < b.y+b.h && a.y+a.h > b.y; }
   function collide(item, index) {
     if (item.type === 'coffee') {
@@ -118,12 +137,16 @@
   }
   function tick(timestamp) {
     raf=0;if(mode!=='run'||document.hidden)return;
-    const dt=Math.min(.035,(timestamp-previous)/1000||.016);previous=timestamp;worldTime+=dt;distance+=dt*(speed/14);speed=Math.min(390,250+distance*.12);score+=dt*4;
+    const dt=Math.min(.035,(timestamp-previous)/1000||.016);previous=timestamp;worldTime+=dt;distance+=dt*(speed/14);speed=Math.min(390,250+distance*.12);score+=dt*4;jumpBuffer=Math.max(0,jumpBuffer-dt);
     walkClock+=dt;if(walkClock>.24){walkClock=0;frame=1-frame;}
     if(distance>=nextBossAt&&!obstacles.some(item=>item.type==='boss')) spawnBoss();
-    nextSpawn-=dt;if(nextSpawn<=0){spawnObstacle();if(Math.random()<.34)addCoffee();nextSpawn=1.1+Math.random()*1.05;}
-    player.vy+=1750*dt;player.y+=player.vy*dt;
-    if(player.y+player.h>=ground()){player.y=ground()-player.h;player.vy=0;player.grounded=true;}
+    if(obstacles.some(item=>item.type==='boss')) nextSpawnDistance=Math.max(nextSpawnDistance,distance+18);
+    else if(distance>=nextSpawnDistance) scheduleNextPattern();
+    player.vy+=gravity*dt;player.y+=player.vy*dt;
+    if(player.y+player.h>=ground()){
+      player.y=ground()-player.h;player.vy=0;player.grounded=true;
+      if(jumpBuffer>0){player.vy=-jumpVelocity;player.grounded=false;jumpBuffer=0;}
+    }
     for(let i=obstacles.length-1;i>=0;i--){const item=obstacles[i];item.x-=speed*dt;if(intersect(player,item))collide(item,i);else if(item.x+item.w<-20)obstacles.splice(i,1);}
     updateHud();paint(worldTime);
     if(energy<=0){mode='over';saveBest();overlay.hidden=false;setOverlay('Deadline reached you.',`You made it ${Math.floor(distance)} metres and scored ${Math.floor(score)}. Rest, then try again.`,'Run again');window.dispatchEvent(new CustomEvent('stillalive:runner-over',{detail:{score,distance}}));return;}
