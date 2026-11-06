@@ -1,57 +1,366 @@
+
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <meta name="theme-color" content="#10131d">
   <meta name="description" content="A cozy hideout for students between deadlines.">
+
   <title>Home</title>
-  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="stylesheet" href="./css/style.css">
+
   <style>
-    .countdown-section{position:relative;isolation:isolate;overflow:hidden;display:block;width:100%;min-height:0;margin:16px auto 0;padding:20px 24px;border:1px solid rgba(77,163,255,.25);border-radius:7px;background:linear-gradient(132deg,rgba(4,20,50,.94),rgba(1,8,24,.97));box-shadow:0 20px 60px rgba(0,0,0,.16)}
-    .countdown-section:before,.countdown-section:after{content:"";position:absolute;z-index:-1;width:170px;height:150px;border-radius:50%;filter:blur(38px);pointer-events:none}
-    .countdown-section:before{right:-54px;top:-70px;background:rgba(77,163,255,.24)}
-    .countdown-section:after{left:42%;bottom:-115px;background:rgba(168,102,113,.2)}
-    .countdown-heading{margin:0 0 12px}
-    .countdown-heading h2{margin:0;color:#8c98ac;font:500 10px 'DM Mono',monospace;letter-spacing:.16em;text-transform:uppercase}
-    #deadline-countdown{position:relative;z-index:1;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:stretch;justify-content:space-between;gap:8px;width:100%}
-    #deadline-countdown>.countdown-unit{display:flex!important;flex:1 1 20%;flex-direction:row;align-items:baseline;justify-content:center;gap:clamp(3px,.7vw,9px);min-width:0;margin:0;padding:12px 5px;border:1px solid rgba(213,213,213,.1);border-radius:7px;background:linear-gradient(140deg,rgba(4,18,46,.85),rgba(2,10,26,.88));text-align:center}
-    #deadline-countdown>.countdown-unit:nth-child(even){background:linear-gradient(140deg,rgba(25,29,43,.86),rgba(9,13,23,.92));}
-    #deadline-countdown>.countdown-unit strong{color:#d5d5d5;font-size:clamp(20px,4vw,44px);font-weight:500;line-height:1;white-space:nowrap}
-    #deadline-countdown>.countdown-unit span{color:#8c98ac;font-size:clamp(6px,.8vw,9px);letter-spacing:.08em;white-space:nowrap}
-    @media(max-width:760px){.countdown-section{margin:16px 0 0;padding:16px 10px}.countdown-heading{margin-bottom:10px}#deadline-countdown{gap:4px}#deadline-countdown>.countdown-unit{gap:2px;padding:10px 2px}#deadline-countdown>.countdown-unit strong{font-size:clamp(16px,5.8vw,27px)}#deadline-countdown>.countdown-unit span{font-size:clamp(5px,1.7vw,7px);letter-spacing:0}}
+    .countdown-section {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      display: block;
+      width: 100%;
+      min-height: 0;
+      margin: 16px auto 0;
+      padding: 20px 24px;
+      border: 1px solid rgba(77,163,255,.25);
+      border-radius: 7px;
+      background: linear-gradient(
+        132deg,
+        rgba(4,20,50,.94),
+        rgba(1,8,24,.97)
+      );
+      box-shadow: 0 20px 60px rgba(0,0,0,.16);
+    }
+
+    .countdown-section::before,
+    .countdown-section::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 170px;
+      height: 150px;
+      border-radius: 50%;
+      filter: blur(38px);
+      pointer-events: none;
+    }
+
+    .countdown-section::before {
+      right: -54px;
+      top: -70px;
+      background: rgba(77,163,255,.24);
+    }
+
+    .countdown-section::after {
+      left: 42%;
+      bottom: -115px;
+      background: rgba(168,102,113,.2);
+    }
+
+    .countdown-heading {
+      margin: 0 0 12px;
+    }
+
+    .countdown-heading h2 {
+      margin: 0;
+      color: #8c98ac;
+      font: 500 10px 'DM Mono', monospace;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    #deadline-countdown {
+      position: relative;
+      z-index: 1;
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 8px;
+      width: 100%;
+    }
+
+    #deadline-countdown > .countdown-unit {
+      display: flex !important;
+      flex: 1 1 20%;
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: center;
+      gap: clamp(3px, .7vw, 9px);
+      min-width: 0;
+      margin: 0;
+      padding: 12px 5px;
+      border: 1px solid rgba(213,213,213,.1);
+      border-radius: 7px;
+      background: linear-gradient(
+        140deg,
+        rgba(4,18,46,.85),
+        rgba(2,10,26,.88)
+      );
+      text-align: center;
+    }
+
+    #deadline-countdown > .countdown-unit:nth-child(even) {
+      background: linear-gradient(
+        140deg,
+        rgba(25,29,43,.86),
+        rgba(9,13,23,.92)
+      );
+    }
+
+    #deadline-countdown > .countdown-unit strong {
+      color: #d5d5d5;
+      font-size: clamp(20px, 4vw, 44px);
+      font-weight: 500;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    #deadline-countdown > .countdown-unit span {
+      color: #8c98ac;
+      font-size: clamp(6px, .8vw, 9px);
+      letter-spacing: .08em;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 760px) {
+      .countdown-section {
+        margin: 16px 0 0;
+        padding: 16px 10px;
+      }
+
+      .countdown-heading {
+        margin-bottom: 10px;
+      }
+
+      #deadline-countdown {
+        gap: 4px;
+      }
+
+      #deadline-countdown > .countdown-unit {
+        gap: 2px;
+        padding: 10px 2px;
+      }
+
+      #deadline-countdown > .countdown-unit strong {
+        font-size: clamp(16px, 5.8vw, 27px);
+      }
+
+      #deadline-countdown > .countdown-unit span {
+        font-size: clamp(5px, 1.7vw, 7px);
+        letter-spacing: 0;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <div class="sky" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+  <div class="sky" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
   <header class="topbar site-header">
-    <a class="wordmark" href="#home" data-shell-home aria-label="Still Alive home">DEADLINE INCOMING<span>.</span></a>
-    <div class="top-actions"><button class="music-shortcut" id="music-settings-button" aria-label="Add or control music">♫</button><button class="icon-button" id="achievements-button" aria-label="View achievements" title="Achievements">✧<span class="achievement-count" id="achievement-count">0</span></button><button class="icon-button" id="settings-button" aria-label="Open settings" title="Settings">⚙</button></div>
+
+    <a
+      class="wordmark"
+      href="./index.html"
+      data-shell-home
+      aria-label="Still Alive home"
+    >
+      DEADLINE INCOMING<span>.</span>
+    </a>
+
+    <div class="top-actions">
+
+      <button
+        class="music-shortcut"
+        id="music-settings-button"
+        aria-label="Add or control music"
+      >
+        ♫
+      </button>
+
+      <button
+        class="icon-button"
+        id="achievements-button"
+        aria-label="View achievements"
+        title="Achievements"
+      >
+        ✧
+        <span class="achievement-count" id="achievement-count">0</span>
+      </button>
+
+      <button
+        class="icon-button"
+        id="settings-button"
+        aria-label="Open settings"
+        title="Settings"
+      >
+        ⚙
+      </button>
+
+    </div>
   </header>
+
+  <!-- Main content -->
   <main class="home-main">
+
+    <!-- Hero -->
     <section class="home-hero">
-      <div class="hero-copy"><p class="eyebrow"><h1>DEADLINE<br><em>INCOMING.</em></h1>
-      <p class="subtitle">deadline is a part of life,<br class="desktop-only"> deadline is why you here while the rest sleep.</p><div class="comfort-card"><span class="quote-mark" aria-hidden="true">“</span>
-      <p id="comfort-message">You have to pass the semester, not in today.</p>
-      <button id="new-message" class="refresh" aria-label="Show another quote">↻</button></div></div>
-    </section>
-    <section class="countdown-section" aria-label="Countdown to your deadline">
-      <div class="countdown-heading"><h2>Time to your nearest deadline</h2></div>
-      <div class="countdown-clock deadline-countdown" id="deadline-countdown" aria-live="off">
-        <div class="countdown-unit"><strong data-countdown="weeks">--</strong><span>WEEK</span></div>
-        <div class="countdown-unit"><strong data-countdown="days">--</strong><span>DAY</span></div>
-        <div class="countdown-unit"><strong data-countdown="hours">--</strong><span>HR</span></div>
-        <div class="countdown-unit"><strong data-countdown="minutes">--</strong><span>MIN</span></div>
-        <div class="countdown-unit"><strong data-countdown="seconds">--</strong><span>SEC</span></div>
+
+      <div class="hero-copy">
+
+        <h1>
+          DEADLINE<br>
+          <em>INCOMING.</em>
+        </h1>
+
+        <p class="subtitle">
+          deadline is a part of life,<br class="desktop-only">
+          deadline is why you here while the rest sleep.
+        </p>
+
+        <div class="comfort-card">
+
+          <span class="quote-mark" aria-hidden="true">“</span>
+
+          <p id="comfort-message">
+            You have to pass the semester, not in today.
+          </p>
+
+          <button
+            id="new-message"
+            class="refresh"
+            aria-label="Show another quote"
+          >
+            ↻
+          </button>
+
+        </div>
+
       </div>
     </section>
-    <section class="activity-section"><div class="section-heading"><div><p class="eyebrow">CHOOSE YOUR SPACE</p></div><span class="tiny-label">POSTPONE YOUR DEADLINES</span></div>
-      <div class="activity-grid"><a class="activity-card void-card" href="chill.html" target="activity-frame"><span class="card-index">01 / UNWIND</span><span class="card-icon">✦</span><strong>Chill with your companion</strong><span class="card-copy">A little creature, a quiet sky, no tasks to finish.</span><span class="card-arrow">↗</span><span class="void-star" aria-hidden="true">✧</span></a><a class="activity-card boss-card" href="gaming.html" target="activity-frame"><span class="card-index">02 / PLAY</span><span class="card-icon">⚔</span><strong>Deadline Rush</strong><span class="card-copy">Run, jump, and make it past the assignment pile.</span><span class="card-arrow">↗</span></a></div>
+
+    <!-- Countdown -->
+    <section
+      class="countdown-section"
+      aria-label="Countdown to your deadline"
+    >
+
+      <div class="countdown-heading">
+        <h2>Time to your nearest deadline</h2>
+      </div>
+
+      <div
+        class="countdown-clock deadline-countdown"
+        id="deadline-countdown"
+        aria-live="off"
+      >
+
+        <div class="countdown-unit">
+          <strong data-countdown="weeks">--</strong>
+          <span>WEEK</span>
+        </div>
+
+        <div class="countdown-unit">
+          <strong data-countdown="days">--</strong>
+          <span>DAY</span>
+        </div>
+
+        <div class="countdown-unit">
+          <strong data-countdown="hours">--</strong>
+          <span>HR</span>
+        </div>
+
+        <div class="countdown-unit">
+          <strong data-countdown="minutes">--</strong>
+          <span>MIN</span>
+        </div>
+
+        <div class="countdown-unit">
+          <strong data-countdown="seconds">--</strong>
+          <span>SEC</span>
+        </div>
+
+      </div>
     </section>
-    <footer class="home-footer"><span>IN THE MOMENT OF PANIC AND DESPAIR</span><span>YOU'RE STILL HERE. Why?</span></footer>
+
+    <section class="activity-section">
+
+      <div class="section-heading">
+
+        <div>
+          <p class="eyebrow">CHOOSE YOUR SPACE</p>
+        </div>
+
+        <span class="tiny-label">
+          POSTPONE YOUR DEADLINES
+        </span>
+
+      </div>
+
+      <div class="activity-grid">
+        <a
+          class="activity-card void-card"
+          href="./chill.html"
+          aria-label="Open Chill"
+        >
+
+          <span class="card-index">01</span>
+
+          <span class="card-icon">✦</span>
+
+          <strong>Chill</strong>
+
+          <span class="card-arrow">↗</span>
+
+          <span class="void-star" aria-hidden="true">✧</span>
+
+        </a>
+        
+        <a
+          class="activity-card boss-card"
+          href="./gaming.html"
+          aria-label="Open Deadline Rush"
+        >
+
+          <span class="card-index">02</span>
+
+          <span class="card-icon">⚔</span>
+
+          <strong>DeadRush</strong>
+
+          <span class="card-arrow">↗</span>
+
+        </a>
+
+      </div>
+      
+    </section>
+    
+    <footer class="home-footer">
+
+      <span>IN THE MOMENT OF PANIC AND DESPAIR</span>
+
+      <span>YOU'RE STILL HERE. Why?</span>
+
+    </footer>
+
   </main>
-  <iframe id="activity-frame" name="activity-frame" title="STILL ALIVE. activities" hidden></iframe>
+  
   <div id="shared-tools"></div>
-  <script src="js/quotes.js"></script><script src="js/storage.js"></script><script src="js/site.js"></script><script src="js/audio.js"></script><script src="js/achievements.js"></script>
+  <script src="./js/quotes.js"></script>
+  <script src="./js/storage.js"></script>
+  <script src="./js/site.js"></script>
+  <script src="./js/audio.js"></script>
+  <script src="./js/achievements.js"></script>
+
 </body>
 </html>
